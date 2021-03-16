@@ -3,7 +3,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
-const authRoutes = require("./src/routes/user");
+const userRoutes = require("./src/routes/user");
+
+const { main } = require('./src/routes/routes.json')
 
 const app = express();
 
@@ -12,10 +14,11 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
 
-app.use("/api/auth", authRoutes);
+//routes
+app.use(main.user, userRoutes);
 
 const PORT = process.env.port || 8000;
 
-app.listen(PORT, (req, res) => {
-  console.log("Server started at port 8000");
+app.listen(PORT, () => {
+  console.log("Server started at port ",PORT);
 });

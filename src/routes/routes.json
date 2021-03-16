@@ -1,0 +1,12 @@
+{
+    "main":{
+        "user":"/user"
+    },
+    "routes":{
+        "user":{
+            "signup":"/signup",
+            "login":"/login"
+        }
+    }
+
+}
