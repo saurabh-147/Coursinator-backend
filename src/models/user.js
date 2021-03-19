@@ -2,12 +2,14 @@ const { auth } = require("firebase-admin");
 const { admin, db } = require("../utils/db");
 
 class User {
-  constructor(id, name, email, role) {
+  constructor(id, name, email, role, color) {
     this.id = id
     this.name = name
     this.email = email
     this.role = role
+    this.color = color
   }
+  
   static async get(conditions=null){
     let query;
     if(conditions === null){
@@ -36,7 +38,17 @@ class User {
         name: this.name,
         email: this.email,
         role: this.role,
+        color:this.color,
       });
+    }
+  }
+
+  toJson() {
+    return {
+      name: this.name,
+      email: this.email,
+      role: this.role,
+      color:this.color
     }
   }
 }

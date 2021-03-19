@@ -25,9 +25,9 @@ exports.signup = async (req, res) => {
       displayName: userInfo.name,
       disabled: false,
     })
-    let user = new User(newUser.uid, newUser.displayName, newUser.email, userInfo.role);
+    let user = new User(newUser.uid, newUser.displayName, newUser.email, userInfo.role, userInfo.color);
     user.save();
-    newUser.role = userInfo.role
+    newUser = {...newUser,...user.toJson()}
 
   }
   catch(err){
