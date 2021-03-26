@@ -1,11 +1,17 @@
 {
     "main":{
-        "user":"/user"
+        "user":"/user",
+        "course":"/course"
     },
     "routes":{
         "user":{
             "signup":"/signup",
             "login":"/login"
+        },
+        "course":{
+            "create" : "/create",
+            "courses" : "/courses", 
+            "getModule" : "/:courseId/:moduleId"
         }
     }
 
