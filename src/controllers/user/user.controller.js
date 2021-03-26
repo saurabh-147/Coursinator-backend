@@ -1,4 +1,4 @@
-const { admin, db } = require("../../utils/db");
+const { admin } = require("../../utils/db");
 const User = require("../../models/user");
 const { uploadFile } = require('../../utils/storageServices')
 const axios = require("axios");
@@ -20,19 +20,17 @@ exports.signup = async (req, res) => {
     });
   }
   let newUser;
-  try{
+  try {
     newUser = await admin.auth().createUser({
       email: userInfo.email,
       password: userInfo.password,
       displayName: userInfo.name,
       disabled: false,
-    })
+    });
     let user = new User(newUser.uid, newUser.displayName, newUser.email, userInfo.role, userInfo.color);
     user.save();
-    newUser = {...newUser,...user.toJson()}
-
-  }
-  catch(err){
+    newUser = { ...newUser, ...user.toJson() };
+  } catch (err) {
     return res.json({ created: false, error: err.message });
   }
 
@@ -45,24 +43,18 @@ exports.login = async (req, res) => {
     email: email,
     password: password,
     returnSecureToken: true,
-  }; 
-  let user,userData;
-  try{
-    user = await axios.post(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
-      payload
-    )
+  };
+  let user, userData;
+  try {
+    user = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, payload);
     user.data.uid = user.data.localId;
-    userData = await User.get({id:user.data.localId})
-    
-
-  }
-  catch(err){
-    let errorMessage="Erorr Fetching User Details! Please Try later."
-    if(err.hasOwnProperty("response")) errorMessage=err.response.data.error.message
+    userData = await User.get({ id: user.data.localId });
+  } catch (err) {
+    let errorMessage = "Erorr Fetching User Details! Please Try later.";
+    if (err.hasOwnProperty("response")) errorMessage = err.response.data.error.message;
     return res.json({ signedIn: false, err: errorMessage });
   }
-  return res.json({ signedIn: true, user: {...userData,...user.data} });
+  return res.json({ signedIn: true, user: { ...userData, ...user.data } });
 };
 
 exports.updateProfile = async (req,res) => {
