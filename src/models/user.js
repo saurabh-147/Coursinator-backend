@@ -42,13 +42,17 @@ class User {
       });
     }
   }
+  static async update(id,updated) {
+    let res = await db.collection("Users").doc(id).set(updated,{ merge: true });
+    console.log("ers",res)    
+  }
 
   toJson() {
     return {
       name: this.name,
       email: this.email,
       role: this.role,
-      color:this.color
+      color:this.color,
     }
   }
 }

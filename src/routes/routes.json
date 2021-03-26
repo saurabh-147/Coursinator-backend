@@ -5,7 +5,8 @@
     "routes":{
         "user":{
             "signup":"/signup",
-            "login":"/login"
+            "login":"/login",
+            "updateProfile":"/update"
         }
     }
 
