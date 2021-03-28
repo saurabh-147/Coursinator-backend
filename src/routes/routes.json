@@ -11,7 +11,7 @@
         },
         "course":{
             "create" : "/create",
-            "courses" : "/courses", 
+            "courses" : "/all", 
             "getModule" : "/:courseId/:moduleId"
         }
     }

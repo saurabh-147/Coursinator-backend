@@ -6,7 +6,6 @@ class Module {
     this.description = description;
     this.duration = duration;
     this.content = content;
-    this.attachment = attachment;
   }
   static async get(conditions) {
     const courseRef = await db.collection("Courses").doc(conditions.courseId).collection("Module").doc(conditions.moduleId);
@@ -28,7 +27,6 @@ class Module {
         description: this.description,
         duration: this.duration,
         content: this.content,
-        attachment: this.attachment,
       });
 
       courseRef = await db.collection("Courses").doc(courseID);
@@ -36,7 +34,7 @@ class Module {
       const res = await courseRef.update({
         moduleSnapshot: admin.firestore.FieldValue.arrayUnion({
           module_id: module.id,
-          topic: this.topic,
+          name: this.topic,
           description: this.description,
           duration: this.duration,
         }),
