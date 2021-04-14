@@ -1,7 +1,6 @@
 const Course = require("../../models/course");
 const Module = require("../../models/module");
-const { uploadFile } = require('../../utils/storageServices')
-
+const { uploadFile } = require("../../utils/storageServices");
 
 exports.createCourse = async (req, res) => {
   let { course } = req.body;
@@ -32,10 +31,10 @@ exports.createCourse = async (req, res) => {
   }
 
   try {
-    if(thumbnail){
-      console.log("uploading thumbnail...")
-      thumb_url = await uploadFile("thumbnails",thumbnail.mimetype.split("/")[1],thumbnail.buffer,course.name);
-      if(thumb_url) course.thumbnail = thumb_url
+    if (thumbnail) {
+      console.log("uploading thumbnail...");
+      thumb_url = await uploadFile("thumbnails", thumbnail.mimetype.split("/")[1], thumbnail.buffer, course.name);
+      if (thumb_url) course.thumbnail = thumb_url;
     }
     let newCourse = new Course(course.name, course.description, course.duration, course.thumbnail);
     const courseID = await newCourse.save();

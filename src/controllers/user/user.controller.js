@@ -1,8 +1,7 @@
 const { admin } = require("../../utils/db");
 const User = require("../../models/user");
-const { uploadFile } = require('../../utils/storageServices')
+const { uploadFile } = require("../../utils/storageServices");
 const axios = require("axios");
-
 
 const API_KEY = "AIzaSyDCcEl6t2za5TgSh7jtQ0U0zuPxmgyelfM";
 
@@ -57,23 +56,21 @@ exports.login = async (req, res) => {
   return res.json({ signedIn: true, user: { ...userData, ...user.data } });
 };
 
-exports.updateProfile = async (req,res) => {
-  let { id, name, email, college, degree, graduationYear, field} = req.body;
-  let updated_values =  {name, email, college, degree, graduationYear, field}
+exports.updateProfile = async (req, res) => {
+  let { id, name, email, college, degree, graduationYear, field } = req.body;
+  let updated_values = { name, email, college, degree, graduationYear, field };
   let profile_img = req.file || null;
-  let profile_picture=null;
-  try{
-    if(profile_img){
-      console.log("Updating profile pic...")
-      profile_picture = await uploadFile("profile_picture",profile_img.mimetype.split("/")[1],profile_img.buffer,id);
-      if(profile_picture) updated_values.profile_picture = profile_picture
+  let profile_picture = null;
+  try {
+    if (profile_img) {
+      console.log("Updating profile pic...");
+      profile_picture = await uploadFile("profile_picture", profile_img.mimetype.split("/")[1], profile_img.buffer, id);
+      if (profile_picture) updated_values.profile_picture = profile_picture;
     }
 
-    await User.update(id,updated_values)    
+    await User.update(id, updated_values);
+  } catch (err) {
+    res.json({ updated: false, error: err });
   }
-  catch(err){
-    res.json({updated:false,error:err})
-  }
-  res.json({updated:true,values:updated_values})
-  
-}
+  res.json({ updated: true, values: updated_values });
+};
