@@ -1,5 +1,6 @@
 const Exam = require("../../models/exam");
 const Question = require("../../models/question");
+const { db } = require("../../utils/db");
 
 exports.createExam = async (req, res) => {
   const { exam } = req.body;
@@ -58,7 +59,7 @@ exports.createExam = async (req, res) => {
 
     const courseRef = await db.collection("Courses").doc(exam.course_id);
 
-    newExam = await courseRef.set(
+    course = await courseRef.set(
       {
         examSnapshot: {
           exam_id: examId,
@@ -71,8 +72,7 @@ exports.createExam = async (req, res) => {
       { merge: true }
     );
 
-    // newExam = { ...newExam, examId };
-    return res.status(200).json({ created: true, exam: newExam });
+    return res.status(200).json({ created: true, exam: newExam, course: course });
   } catch (err) {
     return res.status(400).json({ created: false, error: err.message });
   }

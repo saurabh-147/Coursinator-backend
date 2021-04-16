@@ -7,15 +7,15 @@ class Question {
     this.type = type;
     this.options = options;
   }
-  static async get(conditions) {
-    const quesRef = await db.collection("Exams").doc(conditions.examId).collection("Question").doc(conditions.questionId);
-    const doc = await quesRef.get();
-    if (!doc.exists) {
-      console.log("No such document!");
-    } else {
-      return doc.data();
-    }
-  }
+  // static async get(conditions) {
+  //   const quesRef = await db.collection("Exams").doc(conditions.examId).collection("Question").doc(conditions.questionId);
+  //   const doc = await quesRef.get();
+  //   if (!doc.exists) {
+  //     console.log("No such document!");
+  //   } else {
+  //     return doc.data();
+  //   }
+  // }
   async save(examId) {
     if (this.statement === null || this.answer === null || this.type === null) {
       throw new Error("Fields can't be empty");
