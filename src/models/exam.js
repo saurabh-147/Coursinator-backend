@@ -10,12 +10,23 @@ class Exam {
   }
 
   static async get(conditions = null) {
-    const examRef = await db.collection("Exams").doc(conditions.examId);
+    const examRef = db.collection("Exams").doc(conditions.examId);
     const doc = await examRef.get();
     if (!doc.exists) {
       console.log("No such document!");
     } else {
-      return doc.data();
+      try{
+        let exam = doc.data();
+        let questions = await db.collection("Exams").doc(conditions.examId).collection('Question').get()
+        const questionsList = questions.docs.map(qs => ({qid:qs.id,...qs.data()}))
+        console.log("questions",questionsList)
+        exam.questions = questionsList
+        return exam;
+      }
+      catch(err){
+        console.log(err)
+        return err
+      }
     }
   }
 

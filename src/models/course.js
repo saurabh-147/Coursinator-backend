@@ -1,10 +1,11 @@
 const { db } = require("../utils/db");
 
 class Course {
-  constructor(name, description, duration, thumbnail = null) {
+  constructor(name, description, duration,author, thumbnail = null) {
     this.name = name;
     this.description = description;
     this.duration = duration;
+    this.author = author
     this.thumbnail = thumbnail;
   }
 
@@ -13,11 +14,9 @@ class Course {
     console.log(conditions);
 
     if (conditions === null) {
-      query = await db.collection("Courses");
+      query =  db.collection("Courses");
     } else {
-      query = await db.collection("Courses");
-
-      // query = await query.where("name", "==", conditions.name);
+      query =  query.where("name", "==", conditions.name);
     }
 
     var allCourses = [];
@@ -38,6 +37,7 @@ class Course {
         description: this.description,
         duration: this.duration,
         thumbnail: this.thumbnail,
+        author:this.author
       });
 
       return course.id;
@@ -50,6 +50,7 @@ class Course {
       description: this.description,
       duration: this.duration,
       thumbnail: this.thumbnail,
+      author:this.author
     };
   }
 }

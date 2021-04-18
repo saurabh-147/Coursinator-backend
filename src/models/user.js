@@ -27,7 +27,7 @@ class User {
     return userdata;
   }
 
-  save() {
+  async save() {
     if (this.id === null || this.name === null || this.email === null || this.role === null) throw new Error("Fields can't be empty");
     else {
       return db.collection("Users").doc(this.id).set({

@@ -59,7 +59,7 @@ exports.createExam = async (req, res) => {
 
     const courseRef = await db.collection("Courses").doc(exam.course_id);
 
-    course = await courseRef.set(
+    let course = await courseRef.set(
       {
         examSnapshot: {
           exam_id: examId,
@@ -80,10 +80,17 @@ exports.createExam = async (req, res) => {
 
 exports.getExamDetails = async (req, res) => {
   const { examId } = req.params;
+  let response={}
+  try{
+    const examDoc = await Exam.get({
+      examId: examId,
+    });
+    response={success:true,exam:examDoc}
+  }
+  catch(err){
+    response={success:false,error:err}
+  }
 
-  const result = await Exam.get({
-    examId: examId,
-  });
 
-  res.status(200).json(result);
+  res.status(200).json(response);
 };
