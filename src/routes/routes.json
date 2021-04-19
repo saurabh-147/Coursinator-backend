@@ -8,7 +8,8 @@
         "user":{
             "signup":"/signup",
             "login":"/login",
-            "updateProfile":"/update"
+            "updateProfile":"/update",
+            "enrollCourse" : "/enroll"
         },
         "course":{
             "create" : "/create",

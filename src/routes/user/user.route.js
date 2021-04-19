@@ -12,4 +12,6 @@ router.post(user.login, userController.login);
 
 router.post(user.updateProfile, userController.updateProfile);
 
+router.post(user.enrollCourse, userController.getUserEnrollInCourse);
+
 module.exports = router;

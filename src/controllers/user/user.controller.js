@@ -1,4 +1,4 @@
-const { admin } = require("../../utils/db");
+const { admin, db } = require("../../utils/db");
 const User = require("../../models/user");
 const { uploadFile } = require("../../utils/storageServices");
 const axios = require("axios");
@@ -73,4 +73,20 @@ exports.updateProfile = async (req, res) => {
     res.json({ updated: false, error: err });
   }
   res.json({ updated: true, values: updated_values });
+};
+
+exports.getUserEnrollInCourse = async (req, res) => {
+  const { userId, courseSnapshot } = req.body;
+  console.log(userId);
+
+  let userRef = db.collection("Users").doc(userId);
+  const unionRes = await userRef.update({
+    enrolled: admin.firestore.FieldValue.arrayUnion(courseSnapshot),
+  });
+
+  let userDoc = await userRef.get();
+  return res.status(200).json({
+    success: true,
+    user: userDoc.data(),
+  });
 };

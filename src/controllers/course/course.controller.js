@@ -36,7 +36,7 @@ exports.createCourse = async (req, res) => {
       let thumb_url = await uploadFile("thumbnails", thumbnail.mimetype.split("/")[1], thumbnail.buffer, course.name);
       if (thumb_url) course.thumbnail = thumb_url;
     }
-    let newCourse = new Course(course.name, course.description, course.duration,course.author,course.thumbnail);
+    let newCourse = new Course(course.name, course.description, course.duration, course.author, course.thumbnail);
     const courseID = await newCourse.save();
 
     for (var i = 0; i < course.moduleList.length; i++) {

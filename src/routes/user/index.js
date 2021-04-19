@@ -1,3 +1,3 @@
-const user = require('./user.route');
+const user = require("./user.route");
 
-module.exports =  user ;
+module.exports = user;
