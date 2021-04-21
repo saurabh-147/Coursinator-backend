@@ -76,13 +76,13 @@ exports.updateProfile = async (req, res) => {
 };
 
 exports.getUserEnrollInCourse = async (req, res) => {
-  const { userId, courseSnapshot } = req.body;
-  console.log(userId);
+  const { userId, courseId } = req.body;
 
   let userRef = db.collection("Users").doc(userId);
   const unionRes = await userRef.update({
-    enrolled: admin.firestore.FieldValue.arrayUnion(courseSnapshot),
+    enrolled: admin.firestore.FieldValue.arrayUnion(courseId),
   });
+
 
   let userDoc = await userRef.get();
   return res.status(200).json({

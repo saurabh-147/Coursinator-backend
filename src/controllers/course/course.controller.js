@@ -68,3 +68,32 @@ exports.getAModule = async (req, res) => {
 
   res.status(200).json(result);
 };
+
+
+exports.enrolledCourses = async  (req,res)=>{
+  let courseIds =  req.query.courses.split(',')
+  if(!courseIds || courseIds.length===0 ) return res.json({success:false,message:'Not enough ids in query'})
+  try{
+    let courseList = await Course.getCoursesInList(courseIds);
+    console.log('enrolled courses',courseList);
+    return res.status(200).json({success:true,enrolledCourses:courseList})
+  }
+  catch(err){
+    console.log("error in query ",err)
+    return res.status(200).json({success:false})
+  }
+}
+
+exports.createdCourses = async  (req,res)=>{
+  let authorId =  req.query.authorId
+  if(!authorId) return res.json({success:false,message:'Author Id in Query is mandatory'})
+  try{
+    let courseList = await Course.getCreatedCourses(authorId);
+    console.log('created courses',courseList);
+    return res.status(200).json({success:true,createdCourses:courseList})
+  }
+  catch(err){
+    console.log("error in query ",err)
+    return res.status(200).json({success:false})
+  }
+}

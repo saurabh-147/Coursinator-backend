@@ -14,7 +14,9 @@
         "course":{
             "create" : "/create",
             "courses" : "/all", 
-            "getModule" : "/:courseId/:moduleId"
+            "getModule" : "/:courseId/:moduleId",
+            "enrolledCourses":"/",
+            "createdCourses":"/created"
         },
         "exam" : {
             "create" : "/create",

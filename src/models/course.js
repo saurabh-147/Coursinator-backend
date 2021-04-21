@@ -37,13 +37,32 @@ class Course {
         description: this.description,
         duration: this.duration,
         thumbnail: this.thumbnail,
-        author:this.author
+        author:this.author,
       });
 
       return course.id;
     }
   }
-
+  static async getCoursesInList(courseIds){
+    let courses = await db.collection("Courses").where('__name__','in',courseIds).get()
+    let courseList =[];
+    courses.forEach(doc=>{
+      courseList.push({id:doc.id,...doc.data()})
+    })
+    console.log(courseList)
+    return courseList
+  }
+  
+  static async getCreatedCourses(authorId){
+    let courses = await db.collection("Courses").where('author.id','==',authorId).get()
+    let courseList =[];
+    courses.forEach(doc=>{
+      courseList.push({id:doc.id,...doc.data()})
+    })
+    console.log(courseList)
+    return courseList
+  }
+  
   toJSON() {
     return {
       name: this.name,
