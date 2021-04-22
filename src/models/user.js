@@ -35,6 +35,7 @@ class User {
         email: this.email,
         role: this.role,
         color: this.color,
+        enrolled:[]
       });
     }
   }
@@ -49,6 +50,7 @@ class User {
       email: this.email,
       role: this.role,
       color: this.color,
+      enrolled:[]
     };
   }
 }

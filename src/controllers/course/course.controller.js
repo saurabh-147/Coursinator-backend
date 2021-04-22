@@ -31,6 +31,7 @@ exports.createCourse = async (req, res) => {
   }
 
   try {
+    console.log("Course ",course)
     if (thumbnail) {
       console.log("uploading thumbnail...");
       let thumb_url = await uploadFile("thumbnails", thumbnail.mimetype.split("/")[1], thumbnail.buffer, course.name);
@@ -46,7 +47,7 @@ exports.createCourse = async (req, res) => {
       newModule.save(courseID);
     }
     newCourse = { ...newCourse, courseID };
-
+    
     return res.status(200).json({ created: true, course: newCourse });
   } catch (err) {
     return res.status(400).json({ created: false, error: err.message });
